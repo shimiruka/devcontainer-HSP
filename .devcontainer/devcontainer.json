@@ -1,0 +1,57 @@
+{
+  "name": "HSP",
+  "build": {
+    "dockerfile": "./Dockerfile",
+    "context": ".",
+    "args": {
+      "VARIANT": "bookworm"
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": "true",
+      "username": "vscode",
+      "userUid": "1000",
+      "userGid": "1000",
+      "upgradePackages": "true"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest",
+      "ppa": "false"
+    }
+  },
+
+  // Settings for Windows. If using another OS, remove this section.
+  "mounts": [
+    {
+      "type": "bind",
+      // The value of "source" must be adapted to your system. Run the following command in PowerShell and rewrite the value to the result.
+      // 'wsl wslpath -w "/mnt/wslg" | wsl sed -e "s/\\\\/\\\\\\\\/g"'
+      "source": "\\\\wsl.localhost\\Ubuntu-22.04\\mnt\\wslg",
+      "target": "/mnt/wslg"
+    }
+  ],
+  "containerEnv": {
+    "PULSE_SERVER": "/mnt/wslg/PulseServer"
+  },
+
+  // Configure tool-specific properties.
+  "customizations": {
+    // Configure properties specific to VS Code.
+    "vscode": {
+      // Set *default* container specific settings.json values on container create.
+      "settings": {},
+      // Add the IDs of extensions you want installed when the container is created.
+      "extensions": ["honobonosun.language-hsp3"]
+    }
+  },
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "",
+
+  // Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  "remoteUser": "vscode"
+}

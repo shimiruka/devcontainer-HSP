@@ -1,0 +1,87 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "hspcmp",
+            "type": "shell",
+            "command": "./hspcmp",
+            "args": [
+                "-d",
+                "-i",
+                "-u",
+                "-o${fileDirname}/__hsptmp.ax",
+                "${file}"
+            ],
+            "options": {
+                "cwd": "/OpenHSP"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Run (hsp3cl)",
+            "type": "shell",
+            "command": "/OpenHSP/hsp3cl",
+            "args": [
+                "${fileDirname}/__hsptmp.ax"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "dependsOn": [
+                "hspcmp"
+            ]
+        },
+        {
+            "label": "Run (hsp3dish)",
+            "type": "shell",
+            "command": "/OpenHSP/hsp3dish",
+            "args": [
+                "${fileDirname}/__hsptmp.ax"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "dependsOn": [
+                "hspcmp"
+            ]
+        },
+        {
+            "label": "Run (hsp3gp)",
+            "type": "shell",
+            "command": "/OpenHSP/hsp3gp",
+            "args": [
+                "${fileDirname}/__hsptmp.ax"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "dependsOn": [
+                "hspcmp"
+            ]
+        },
+        {
+            "label": "Make start.ax",
+            "type": "shell",
+            "command": "./hspcmp",
+            "args": [
+                "-i",
+                "-u",
+                "-o${workspaceFolder}/start.ax",
+                "${file}"
+            ],
+            "options": {
+                "cwd": "/OpenHSP"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        }
+    ]
+}
